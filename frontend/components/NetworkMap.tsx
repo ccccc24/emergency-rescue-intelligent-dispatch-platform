@@ -18,7 +18,6 @@ export function NetworkMap({ scenario, solution, layout, currentTime, showRoutes
       const y = Number(point?.y);
       if (Number.isFinite(x) && Number.isFinite(y)) points.push({ x, y });
     };
-
     Object.values(layout ?? {}).forEach(addPoint);
     Object.values(scenario.villages ?? {}).forEach(addPoint);
     const minX = Math.min(...points.map((point) => point.x));
@@ -33,21 +32,18 @@ export function NetworkMap({ scenario, solution, layout, currentTime, showRoutes
     const project = (point: Point) => ({ x: offsetX + (point.x - minX) * scale, y: HEIGHT - (offsetY + (point.y - minY) * scale) });
     const nodePoint = (nodeId: string | number): Point => {
       const key = String(nodeId);
-    
       const explicit = layout?.[key];
       if (explicit) {
         const x = Number(explicit.x);
         const y = Number(explicit.y);
         if (Number.isFinite(x) && Number.isFinite(y)) return project({ x, y });
       }
-    
       const village = scenario.villages?.[key];
       if (village) {
         const x = Number(village.x);
         const y = Number(village.y);
         if (Number.isFinite(x) && Number.isFinite(y)) return project({ x, y });
       }
-    
       return project({ x: 0, y: 0 });
     };
     return { nodePoint };
@@ -57,8 +53,8 @@ export function NetworkMap({ scenario, solution, layout, currentTime, showRoutes
   const vehicleMarkers = useMemo(() => {
     if (currentTime === undefined || !solution) return [];
     return Object.entries(trajectories).map(([vehicleId, frames], index) => {
-      const marker = interpolateVehicle(frames, currentTime);
-      return marker ? { vehicleId, point: projection.nodePoint(marker.location), color: VEHICLE_COLORS[index % VEHICLE_COLORS.length] } : null;
+      const point = interpolateVehicle(frames, currentTime, projection.nodePoint);
+      return point ? { vehicleId, point, color: VEHICLE_COLORS[index % VEHICLE_COLORS.length] } : null;
     }).filter(Boolean) as Array<{ vehicleId: string; point: Point; color: string }>;
   }, [currentTime, projection, solution, trajectories]);
 
@@ -92,15 +88,30 @@ export function NetworkMap({ scenario, solution, layout, currentTime, showRoutes
   );
 }
 
-function interpolateVehicle(frames: TrajectoryFrame[], time: number): { location: number } | null {
+function interpolateVehicle(
+  frames: TrajectoryFrame[],
+  time: number,
+  nodePoint: (nodeId: string | number) => Point,
+): Point | null {
   if (!frames.length) return null;
-  if (time <= Number(frames[0].time)) return { location: Number(frames[0].location) };
+  if (time <= Number(frames[0].time)) return nodePoint(frames[0].location);
+
   for (let index = 0; index < frames.length - 1; index += 1) {
-    const current = frames[index]; const next = frames[index + 1];
-    if (time >= Number(current.time) && time <= Number(next.time)) {
-      const fraction = next.time === current.time ? 1 : (time - current.time) / (next.time - current.time);
-      return { location: fraction >= 0.5 ? Number(next.location) : Number(current.location) };
+    const current = frames[index];
+    const next = frames[index + 1];
+    const startTime = Number(current.time);
+    const endTime = Number(next.time);
+    if (time >= startTime && time <= endTime) {
+      const duration = endTime - startTime;
+      const fraction = duration <= 0 ? 1 : Math.min(Math.max((time - startTime) / duration, 0), 1);
+      const start = nodePoint(current.location);
+      const end = nodePoint(next.location);
+      return {
+        x: start.x + (end.x - start.x) * fraction,
+        y: start.y + (end.y - start.y) * fraction,
+      };
     }
   }
-  return { location: Number(frames[frames.length - 1].location) };
+
+  return nodePoint(frames[frames.length - 1].location);
 }
