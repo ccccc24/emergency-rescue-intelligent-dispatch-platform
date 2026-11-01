@@ -45,7 +45,7 @@ export default function OverviewPage() {
           <KpiCard label="优先村" value={`${prioritySatisfied} / ${priorityTotal}`} hint="按需求完成状态统计" tone="amber" icon="★" />
         </section>
         <section className="overview-grid">
-          <div className="panel map-panel"><div className="panel-heading"><div><span className="eyebrow">OFFLINE NETWORK</span><h2>风险着色航路图</h2></div><span className="muted">节点为本地坐标，不依赖在线地图</span></div><NetworkMap scenario={scenario} solution={solution} layout={layout} /></div>
+          <div className="panel map-panel"><div className="panel-heading"><div><span className="eyebrow">OFFLINE NETWORK</span><h2>风险着色线路图</h2></div><span className="muted">节点为本地坐标，不依赖在线地图</span></div><NetworkMap scenario={scenario} solution={solution} layout={layout} /></div>
           <div className="panel demand-panel"><div className="panel-heading"><div><span className="eyebrow">DEMAND BOARD</span><h2>村庄需求与送达</h2></div></div><div className="table-wrap"><table><thead><tr><th>村庄</th><th>灾情</th><th>需求</th><th>已送达</th><th>满足率</th></tr></thead><tbody>{rows.map((row) => <tr key={row.id} className={row.priority ? 'priority-row' : ''}><td><span className="village-name">{row.priority ? '★ ' : ''}{row.name}</span></td><td><span className={`level level-${Math.min(row.disaster, 3)}`}>L{row.disaster}</span></td><td>{row.demand.toFixed(1)}</td><td>{row.delivered.toFixed(1)}</td><td>{row.rate === null ? '—' : `${(row.rate * 100).toFixed(1)}%`}</td></tr>)}</tbody></table></div></div>
         </section>
       </> : !loading ? <EmptyPanel title="尚未载入场景" detail="请在后端可用后刷新页面，或前往“场景与需求”创建自定义场景。" /> : null}
