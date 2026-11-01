@@ -3,7 +3,8 @@
     "api/index.py": {
       "maxDuration": 60,
       "memory": 1024,
-      "includeFiles": "{app/**,configs/**,data/**,models/**,outputs/**,scripts/**,src/**}"
+      "includeFiles": "{app/**,configs/**,data/**,models/**,outputs/**,scripts/**,src/**}",
+      "excludeFiles": "{frontend/**,node_modules/**}"
     }
   }
 }
