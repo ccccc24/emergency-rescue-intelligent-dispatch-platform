@@ -7,7 +7,7 @@ import { useApp } from '../lib/app-context';
 
 const NAV = [
   { href: '/', label: '态势总览', eyebrow: 'OVERVIEW', glyph: '◉' },
-  { href: '/scenario', label: '场景与需求', eyebrow: 'INPUT', glyph: '◇' },
+  { href: '/scenario', label: '数据输入', eyebrow: 'INPUT', glyph: '◇' },
   { href: '/schedule', label: '智能调度', eyebrow: 'PLANNER', glyph: '↗' },
   { href: '/compare', label: '方案对比', eyebrow: 'BENCHMARK', glyph: '▥' },
   { href: '/explain', label: 'AI 决策解释', eyebrow: 'EXPLAIN', glyph: '✦' },
@@ -21,7 +21,7 @@ export function Shell({ children }: { children: ReactNode }) {
   return (
     <div className="app-shell">
       <aside className="sidebar">
-        <div className="brand-block"><div className="brand-mark">翼</div><div><div className="brand-name">翼援调度</div><div className="brand-sub">WING AID COMMAND</div></div></div>
+        <div className="brand-block"><div className="brand-mark">驰</div><div><div className="brand-name">驰援调度</div><div className="brand-sub">WING AID COMMAND</div></div></div>
         <div className="sidebar-caption">救援控制台 / WORKSPACE</div>
         <nav className="nav-list" aria-label="主导航">
           {NAV.map((item) => (
