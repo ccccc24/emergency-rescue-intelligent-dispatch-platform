@@ -1,0 +1,49 @@
+﻿seed: 42
+
+paths:
+  data_synthetic: data/synthetic
+  data_geo: data/geo
+  models: models
+  outputs: outputs
+  village_names: configs/village_names.yaml
+
+optimization:
+  max_states: 30000
+  time_limit: 35          # 秒
+  num_vehicles: 3
+  vehicle_capacity: 100
+  vehicle_time_limit: 100.0  # 单车任务时限，距离/速度得到的累计时间
+  heuristic_type: priority_based
+  risk_cost_alpha: 0.2      # 0=原版纯时间目标；>0=风险规避，代价按 alpha*risk*length 累加
+
+ml:
+  train_days: 45
+  test_days: 15
+  train_ratio: 0.7
+  demand_model: random_forest
+  risk_model: random_forest
+  noise_std: 0.15
+  rf_n_estimators: 300
+  rf_max_depth: null
+  rf_min_samples_leaf: 1
+  rf_max_features: 1.0
+  rf_n_jobs: 1
+  rf_tuned_max_depth: 6
+  rf_tuned_min_samples_leaf: 5
+  log1p_min_mae_improvement: 0.03
+  risk_lr_max_iter: 1000
+  risk_rf_n_estimators: 300
+  risk_rf_max_depth: 6
+  risk_rf_n_jobs: 1
+  risk_default_threshold: 0.5
+  risk_candidate_threshold: 0.35
+
+risk:
+  priority_threshold: 0.7
+  priority_village_threshold: 0.6
+  isolated_road_threshold: 0.75
+  warning_threshold: 0.7
+  high_risk_edge_threshold: 0.6
+  speed_penalty: 0.1      # adjusted_speed = base_speed * (1 - risk * speed_penalty)
+
+

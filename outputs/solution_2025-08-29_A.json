@@ -1,0 +1,457 @@
+{
+  "scenario_date": "2025-08-29",
+  "ablation_mode": "hist_demand",
+  "config_snapshot": {
+    "time_limit": 45.0,
+    "max_states": 50000,
+    "risk_cost_alpha": 0.2,
+    "speed_penalty": 0.1,
+    "num_vehicles": 3,
+    "vehicle_capacity": 100.0,
+    "heuristic": "priority_based"
+  },
+  "vehicle_trajectories": {
+    "vehicle_1": [
+      {
+        "time": 0.0,
+        "location": 0,
+        "load": 100.0,
+        "delivered": {},
+        "action": "depart"
+      },
+      {
+        "time": 0.882634,
+        "location": 4,
+        "load": 0.0,
+        "delivered": {
+          "4": 100.0
+        },
+        "action": "deliver"
+      },
+      {
+        "time": 1.101171,
+        "location": 7,
+        "load": 0.0,
+        "delivered": {
+          "4": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 1.275377,
+        "location": 1,
+        "load": 0.0,
+        "delivered": {
+          "4": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 1.489032,
+        "location": 0,
+        "load": 100.0,
+        "delivered": {
+          "4": 100.0
+        },
+        "action": "reload"
+      },
+      {
+        "time": 2.371665,
+        "location": 4,
+        "load": 9.285714,
+        "delivered": {
+          "4": 190.714286
+        },
+        "action": "deliver"
+      },
+      {
+        "time": 2.717597,
+        "location": 5,
+        "load": 0.0,
+        "delivered": {
+          "4": 190.714286,
+          "5": 9.285714
+        },
+        "action": "deliver"
+      },
+      {
+        "time": 2.963264,
+        "location": 8,
+        "load": 0.0,
+        "delivered": {
+          "4": 190.714286,
+          "5": 9.285714
+        },
+        "action": "move"
+      },
+      {
+        "time": 3.163387,
+        "location": 2,
+        "load": 0.0,
+        "delivered": {
+          "4": 190.714286,
+          "5": 9.285714
+        },
+        "action": "move"
+      },
+      {
+        "time": 3.510883,
+        "location": 0,
+        "load": 100.0,
+        "delivered": {
+          "4": 190.714286,
+          "5": 9.285714
+        },
+        "action": "reload"
+      },
+      {
+        "time": 4.775865,
+        "location": 6,
+        "load": 0.0,
+        "delivered": {
+          "4": 190.714286,
+          "5": 9.285714,
+          "6": 100.0
+        },
+        "action": "deliver"
+      },
+      {
+        "time": 5.050115,
+        "location": 9,
+        "load": 0.0,
+        "delivered": {
+          "4": 190.714286,
+          "5": 9.285714,
+          "6": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 5.237728,
+        "location": 3,
+        "load": 0.0,
+        "delivered": {
+          "4": 190.714286,
+          "5": 9.285714,
+          "6": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 5.861596,
+        "location": 0,
+        "load": 100.0,
+        "delivered": {
+          "4": 190.714286,
+          "5": 9.285714,
+          "6": 100.0
+        },
+        "action": "reload"
+      },
+      {
+        "time": 6.209092,
+        "location": 2,
+        "load": 52.142857,
+        "delivered": {
+          "4": 190.714286,
+          "5": 9.285714,
+          "6": 100.0,
+          "2": 47.857143
+        },
+        "action": "deliver"
+      },
+      {
+        "time": 6.427155,
+        "location": 1,
+        "load": 29.857143,
+        "delivered": {
+          "4": 190.714286,
+          "5": 9.285714,
+          "6": 100.0,
+          "2": 47.857143,
+          "1": 22.285714
+        },
+        "action": "deliver"
+      }
+    ],
+    "vehicle_2": [
+      {
+        "time": 0.0,
+        "location": 0,
+        "load": 100.0,
+        "delivered": {},
+        "action": "depart"
+      },
+      {
+        "time": 1.002513,
+        "location": 5,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0
+        },
+        "action": "deliver"
+      },
+      {
+        "time": 1.248179,
+        "location": 8,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 1.448303,
+        "location": 2,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 1.795799,
+        "location": 0,
+        "load": 100.0,
+        "delivered": {
+          "5": 100.0
+        },
+        "action": "reload"
+      },
+      {
+        "time": 3.060781,
+        "location": 6,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0,
+          "6": 100.0
+        },
+        "action": "deliver"
+      },
+      {
+        "time": 3.335031,
+        "location": 9,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0,
+          "6": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 3.522644,
+        "location": 3,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0,
+          "6": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 4.146512,
+        "location": 0,
+        "load": 100.0,
+        "delivered": {
+          "5": 100.0,
+          "6": 100.0
+        },
+        "action": "reload"
+      },
+      {
+        "time": 4.770381,
+        "location": 3,
+        "load": 13.142857,
+        "delivered": {
+          "5": 100.0,
+          "6": 100.0,
+          "3": 86.857143
+        },
+        "action": "deliver"
+      },
+      {
+        "time": 4.957994,
+        "location": 9,
+        "load": 13.142857,
+        "delivered": {
+          "5": 100.0,
+          "6": 100.0,
+          "3": 86.857143
+        },
+        "action": "move"
+      },
+      {
+        "time": 5.123952,
+        "location": 8,
+        "load": 13.142857,
+        "delivered": {
+          "5": 100.0,
+          "6": 100.0,
+          "3": 86.857143
+        },
+        "action": "move"
+      },
+      {
+        "time": 5.369618,
+        "location": 5,
+        "load": 10.0,
+        "delivered": {
+          "5": 103.142857,
+          "6": 100.0,
+          "3": 86.857143
+        },
+        "action": "deliver"
+      }
+    ],
+    "vehicle_3": [
+      {
+        "time": 0.0,
+        "location": 0,
+        "load": 100.0,
+        "delivered": {},
+        "action": "depart"
+      },
+      {
+        "time": 1.002513,
+        "location": 5,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0
+        },
+        "action": "deliver"
+      },
+      {
+        "time": 1.248179,
+        "location": 8,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 1.448303,
+        "location": 2,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 1.795799,
+        "location": 0,
+        "load": 100.0,
+        "delivered": {
+          "5": 100.0
+        },
+        "action": "reload"
+      },
+      {
+        "time": 3.060781,
+        "location": 6,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0,
+          "6": 100.0
+        },
+        "action": "deliver"
+      },
+      {
+        "time": 3.335031,
+        "location": 9,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0,
+          "6": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 3.522644,
+        "location": 3,
+        "load": 0.0,
+        "delivered": {
+          "5": 100.0,
+          "6": 100.0
+        },
+        "action": "move"
+      },
+      {
+        "time": 4.146512,
+        "location": 0,
+        "load": 100.0,
+        "delivered": {
+          "5": 100.0,
+          "6": 100.0
+        },
+        "action": "reload"
+      },
+      {
+        "time": 5.411495,
+        "location": 6,
+        "load": 39.857143,
+        "delivered": {
+          "5": 100.0,
+          "6": 160.142857
+        },
+        "action": "deliver"
+      },
+      {
+        "time": 5.71995,
+        "location": 5,
+        "load": 0.0,
+        "delivered": {
+          "5": 139.857143,
+          "6": 160.142857
+        },
+        "action": "deliver"
+      }
+    ]
+  },
+  "village_delivery_summary": {
+    "1": {
+      "demand": 22.285714,
+      "delivered": 22.285714,
+      "satisfied_pct": 100.0
+    },
+    "2": {
+      "demand": 47.857143,
+      "delivered": 47.857143,
+      "satisfied_pct": 100.0
+    },
+    "3": {
+      "demand": 86.857143,
+      "delivered": 86.857143,
+      "satisfied_pct": 100.0
+    },
+    "4": {
+      "demand": 190.714286,
+      "delivered": 190.714286,
+      "satisfied_pct": 100.0
+    },
+    "5": {
+      "demand": 252.285714,
+      "delivered": 252.285714,
+      "satisfied_pct": 100.0
+    },
+    "6": {
+      "demand": 360.142857,
+      "delivered": 360.142857,
+      "satisfied_pct": 100.0
+    }
+  },
+  "metrics": {
+    "slowest_vehicle_time": 6.4271551312267965,
+    "total_distance": 708.9,
+    "priority_villages_satisfied": 3,
+    "total_exposed_risk": 223.5129176581219,
+    "high_risk_edge_visits": 4,
+    "total_demand_satisfied_rate": 1.0,
+    "unserved_demand_total": 0.0
+  },
+  "solver_status": "success",
+  "solve_time_actual": 1.045868,
+  "generated_at": "2026-11-01T16:41:54+08:00",
+  "scenario_json_md5": "79dab930e66d774a08860833bc397201"
+}

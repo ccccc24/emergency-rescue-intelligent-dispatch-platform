@@ -1,0 +1,245 @@
+{
+  "model_file": "risk_model.pkl",
+  "model_type": "RandomForestClassifier",
+  "target": "is_broken",
+  "feature_order": [
+    "length",
+    "base_speed",
+    "weather_code",
+    "geology_risk",
+    "hist_break_count"
+  ],
+  "weather_encoding": {
+    "晴": 0,
+    "雨": 1,
+    "暴风": 2
+  },
+  "trained_at": "2026-11-01T16:41:19+08:00",
+  "training_date_range": {
+    "start": "2025-06-01",
+    "end": "2025-08-02"
+  },
+  "test_date_range": {
+    "start": "2025-08-03",
+    "end": "2025-08-29"
+  },
+  "test_metrics": {
+    "accuracy": 0.837037037037037,
+    "precision": 0.39436619718309857,
+    "recall": 0.5490196078431373,
+    "f1": 0.45901639344262296,
+    "auc": 0.7909050625900077
+  },
+  "threshold_analysis": {
+    "0.50": {
+      "accuracy": 0.837037037037037,
+      "precision": 0.39436619718309857,
+      "recall": 0.5490196078431373,
+      "f1": 0.45901639344262296,
+      "auc": 0.7909050625900077
+    },
+    "0.35": {
+      "accuracy": 0.7679012345679013,
+      "precision": 0.3130434782608696,
+      "recall": 0.7058823529411765,
+      "f1": 0.43373493975903615,
+      "auc": 0.7909050625900077
+    }
+  },
+  "default_threshold": 0.5,
+  "recommended_threshold": 0.35,
+  "recommended_threshold_reason": "道路中断的漏报成本高于误报成本；降低阈值以提高 Recall，便于调度器提前绕行或在人工复核后封路。",
+  "priority_threshold_default": 0.7,
+  "feature_importance": {
+    "weather_code": 0.31899,
+    "geology_risk": 0.301889,
+    "base_speed": 0.1784,
+    "length": 0.103578,
+    "hist_break_count": 0.097142
+  },
+  "latest_risk_score_date": "2025-08-29",
+  "latest_risk_scores": [
+    {
+      "road_id": "R01",
+      "from": 0,
+      "to": 1,
+      "risk_score": 0.213619
+    },
+    {
+      "road_id": "R02",
+      "from": 0,
+      "to": 2,
+      "risk_score": 0.100598
+    },
+    {
+      "road_id": "R03",
+      "from": 0,
+      "to": 3,
+      "risk_score": 0.097626
+    },
+    {
+      "road_id": "R04",
+      "from": 1,
+      "to": 7,
+      "risk_score": 0.126607
+    },
+    {
+      "road_id": "R05",
+      "from": 7,
+      "to": 4,
+      "risk_score": 0.085603
+    },
+    {
+      "road_id": "R06",
+      "from": 2,
+      "to": 8,
+      "risk_score": 0.206048
+    },
+    {
+      "road_id": "R07",
+      "from": 8,
+      "to": 5,
+      "risk_score": 0.089061
+    },
+    {
+      "road_id": "R08",
+      "from": 3,
+      "to": 9,
+      "risk_score": 0.11708
+    },
+    {
+      "road_id": "R09",
+      "from": 9,
+      "to": 6,
+      "risk_score": 0.195461
+    },
+    {
+      "road_id": "R10",
+      "from": 7,
+      "to": 8,
+      "risk_score": 0.236282
+    },
+    {
+      "road_id": "R11",
+      "from": 8,
+      "to": 9,
+      "risk_score": 0.117985
+    },
+    {
+      "road_id": "R12",
+      "from": 1,
+      "to": 3,
+      "risk_score": 0.141977
+    },
+    {
+      "road_id": "R13",
+      "from": 0,
+      "to": 4,
+      "risk_score": 0.483027
+    },
+    {
+      "road_id": "R14",
+      "from": 0,
+      "to": 5,
+      "risk_score": 0.445066
+    },
+    {
+      "road_id": "R15",
+      "from": 0,
+      "to": 6,
+      "risk_score": 0.60154
+    },
+    {
+      "road_id": "R16",
+      "from": 1,
+      "to": 2,
+      "risk_score": 0.420708
+    },
+    {
+      "road_id": "R17",
+      "from": 2,
+      "to": 3,
+      "risk_score": 0.425724
+    },
+    {
+      "road_id": "R18",
+      "from": 4,
+      "to": 5,
+      "risk_score": 0.1867
+    },
+    {
+      "road_id": "R19",
+      "from": 5,
+      "to": 6,
+      "risk_score": 0.454209
+    },
+    {
+      "road_id": "R20",
+      "from": 1,
+      "to": 10,
+      "risk_score": 0.506777
+    },
+    {
+      "road_id": "R21",
+      "from": 10,
+      "to": 4,
+      "risk_score": 0.473765
+    },
+    {
+      "road_id": "R22",
+      "from": 3,
+      "to": 11,
+      "risk_score": 0.293192
+    },
+    {
+      "road_id": "R23",
+      "from": 11,
+      "to": 6,
+      "risk_score": 0.545861
+    },
+    {
+      "road_id": "R24",
+      "from": 2,
+      "to": 4,
+      "risk_score": 0.433575
+    },
+    {
+      "road_id": "R25",
+      "from": 2,
+      "to": 12,
+      "risk_score": 0.859677
+    },
+    {
+      "road_id": "R26",
+      "from": 12,
+      "to": 5,
+      "risk_score": 0.854915
+    },
+    {
+      "road_id": "R27",
+      "from": 3,
+      "to": 13,
+      "risk_score": 0.863263
+    },
+    {
+      "road_id": "R28",
+      "from": 13,
+      "to": 6,
+      "risk_score": 0.828126
+    },
+    {
+      "road_id": "R29",
+      "from": 4,
+      "to": 14,
+      "risk_score": 0.8309
+    },
+    {
+      "road_id": "R30",
+      "from": 14,
+      "to": 1,
+      "risk_score": 0.804748
+    }
+  ],
+  "random_seed": 42,
+  "dataset_md5": "39526e62e2b0ac98e568914852ce5ef0"
+}

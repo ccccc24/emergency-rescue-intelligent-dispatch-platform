@@ -1,0 +1,32 @@
+{
+  "model_file": "demand_model.pkl",
+  "model_type": "RandomForestRegressor",
+  "target_transform": "none",
+  "feature_order": [
+    "population",
+    "disaster_level",
+    "distance_to_center",
+    "road_accessibility",
+    "weather_code",
+    "is_priority",
+    "hist_demand_mean"
+  ],
+  "target": "demand",
+  "selected_candidate": "rf_tuned",
+  "trained_at": "2026-11-01T16:41:04+08:00",
+  "training_date_range": {
+    "start": "2025-06-08",
+    "end": "2025-08-04"
+  },
+  "test_date_range": {
+    "start": "2025-08-05",
+    "end": "2025-08-29"
+  },
+  "test_metrics": {
+    "MAE": 18.850054534324457,
+    "RMSE": 27.172769301915043,
+    "R²": 0.9528047040032983
+  },
+  "random_seed": 42,
+  "dataset_md5": "d72630b26581f88a25e97b68aec6f4af"
+}

@@ -1,0 +1,16 @@
+frontend/
+backups/
+docs/
+tests/
+.pytest_cache/
+pytest-of-ccc/
+.vscode/
+*.md
+*.png
+pytest.ini
+models/demand_rf.pkl
+outputs/*.csv
+outputs/excel_examples/
+__pycache__/
+*.pyc
+requirements-dev.txt

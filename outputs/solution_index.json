@@ -1,0 +1,34 @@
+{
+  "default_scenario": "2025-08-29",
+  "default_mode": "C",
+  "scenarios": {
+    "2025-08-29": {
+      "label": "常规天气日",
+      "weather": "晴",
+      "modes": [
+        "A",
+        "B",
+        "C"
+      ],
+      "files": {
+        "A": "outputs/solution_2025-08-29_A.json",
+        "B": "outputs/solution_2025-08-29_B.json",
+        "C": "outputs/solution_2025-08-29_C.json"
+      }
+    },
+    "2025-08-01": {
+      "label": "恶劣天气日",
+      "weather": "暴风",
+      "modes": [
+        "A",
+        "B",
+        "C"
+      ],
+      "files": {
+        "A": "outputs/solution_2025-08-01_A.json",
+        "B": "outputs/solution_2025-08-01_B.json",
+        "C": "outputs/solution_2025-08-01_C.json"
+      }
+    }
+  }
+}

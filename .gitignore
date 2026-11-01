@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 环境
+.env
+
+# 数据与模型
+data/synthetic/*.csv
+models/*.pkl
+outputs/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+
+# Local rollback copies
+backups/
+
+# Vercel runtime assets required by the FastAPI function
+!data/synthetic/demand.csv
+!data/synthetic/road.csv
+!models/demand_model.pkl
+!models/risk_model.pkl
+!outputs/
+outputs/*
+!outputs/*.json
+
