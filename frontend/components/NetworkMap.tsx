@@ -12,9 +12,14 @@ const riskWidth = (risk: number) => risk >= 0.65 ? 5 : risk >= 0.35 ? 3.6 : 2.4;
 
 export function NetworkMap({ scenario, solution, layout, currentTime, showRoutes = true, compact = false }: { scenario: Scenario; solution: Solution | null; layout: Record<string, Point>; currentTime?: number; showRoutes?: boolean; compact?: boolean }) {
   const projection = useMemo(() => {
+    const isFinitePoint = (point: Point) => Number.isFinite(point.x) && Number.isFinite(point.y);
     const points: Point[] = [{ x: 0, y: 0 }];
-    Object.values(layout ?? {}).forEach((value) => points.push({ x: Number(value.x), y: Number(value.y) }));
-    Object.values(scenario.villages ?? {}).forEach((village) => points.push({ x: Number(village.x), y: Number(village.y) }));
+    const addPoint = (x: unknown, y: unknown) => {
+      const point = { x: Number(x), y: Number(y) };
+      if (isFinitePoint(point)) points.push(point);
+    };
+    Object.values(layout ?? {}).forEach((value) => addPoint(value?.x, value?.y));
+    Object.values(scenario.villages ?? {}).forEach((village) => addPoint(village.x, village.y));
     const minX = Math.min(...points.map((point) => point.x));
     const maxX = Math.max(...points.map((point) => point.x));
     const minY = Math.min(...points.map((point) => point.y));
@@ -28,9 +33,11 @@ export function NetworkMap({ scenario, solution, layout, currentTime, showRoutes
     const nodePoint = (nodeId: string | number): Point => {
       const key = String(nodeId);
       const explicit = layout?.[key];
-      if (explicit) return project({ x: Number(explicit.x), y: Number(explicit.y) });
+      const explicitPoint = explicit ? { x: Number(explicit.x), y: Number(explicit.y) } : null;
+      if (explicitPoint && isFinitePoint(explicitPoint)) return project(explicitPoint);
       const village = scenario.villages?.[key];
-      return village ? project({ x: Number(village.x), y: Number(village.y) }) : project({ x: 0, y: 0 });
+      const villagePoint = village ? { x: Number(village.x), y: Number(village.y) } : null;
+      return villagePoint && isFinitePoint(villagePoint) ? project(villagePoint) : project({ x: 0, y: 0 });
     };
     return { nodePoint };
   }, [layout, scenario]);
