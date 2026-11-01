@@ -21,7 +21,7 @@ export function Shell({ children }: { children: ReactNode }) {
   return (
     <div className="app-shell">
       <aside className="sidebar">
-        <div className="brand-block"><div className="brand-mark">驰</div><div><div className="brand-name">驰援调度</div><div className="brand-sub">WING AID COMMAND</div></div></div>
+        <div className="brand-block"><div className="brand-mark">驰</div><div><div className="brand-name">驰援调度</div><div className="brand-sub">CHIYUAN DISPATCH</div></div></div>
         <div className="sidebar-caption">救援控制台 / WORKSPACE</div>
         <nav className="nav-list" aria-label="主导航">
           {NAV.map((item) => (
