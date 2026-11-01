@@ -53,7 +53,7 @@ BASE_CONFIG_PATH = PROJECT_ROOT / "configs" / "live_demo.yaml"
 TEMPLATE_PATH = PROJECT_ROOT / "app" / "assets" / "scenario_template.xlsx"
 MODE_TO_GROUP = {"hist_demand": "A", "no_risk_adjust": "B", "full": "C"}
 
-app = FastAPI(title="翼援航空应急救援调度 API", version="1.0.0")
+app = FastAPI(title="驰援应急救援智能调度 API", version="1.0.0")
 _origins = os.getenv("CORS_ORIGINS", "*").strip()
 app.add_middleware(
     CORSMiddleware,
@@ -326,7 +326,7 @@ def _post_action(action: str, payload: dict[str, Any]) -> Any:
 _ROOT_PAGE = """<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>翼援航空应急救援调度 API</title>
+<title>驰援应急救援智能调度 API</title>
 <style>
 body{margin:0;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f6f7f9;color:#1f2933;display:flex;min-height:100vh;align-items:center;justify-content:center;padding:24px;box-sizing:border-box}
 main{max-width:560px;width:100%;background:#fff;border:1px solid #e4e7eb;border-radius:12px;padding:32px}
@@ -335,7 +335,7 @@ h1{font-size:20px;margin:0 0 8px}p{line-height:1.7;margin:8px 0;color:#52606d}
 ul{padding-left:20px;line-height:1.9}a{color:#c2410c}code{background:#f1f3f5;padding:1px 6px;border-radius:4px}
 </style></head><body><main>
 <span class="ok">后端运行正常</span>
-<h1>翼援航空应急救援调度 API</h1>
+<h1>驰援应急救援智能调度 API</h1>
 <p>这是 FastAPI 后端服务，所有接口统一位于 <code>/api/index</code>，通过 <code>action</code> 参数区分操作。</p>
 <ul>
 <li><a href="/api/index?action=health">健康检查 action=health</a></li>
