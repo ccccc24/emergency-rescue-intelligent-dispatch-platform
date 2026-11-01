@@ -13,8 +13,14 @@ const riskWidth = (risk: number) => risk >= 0.65 ? 5 : risk >= 0.35 ? 3.6 : 2.4;
 export function NetworkMap({ scenario, solution, layout, currentTime, showRoutes = true, compact = false }: { scenario: Scenario; solution: Solution | null; layout: Record<string, Point>; currentTime?: number; showRoutes?: boolean; compact?: boolean }) {
   const projection = useMemo(() => {
     const points: Point[] = [{ x: 0, y: 0 }];
-    Object.values(layout ?? {}).forEach((value) => points.push({ x: Number(value.x), y: Number(value.y) }));
-    Object.values(scenario.villages ?? {}).forEach((village) => points.push({ x: Number(village.x), y: Number(village.y) }));
+    const addPoint = (point?: { x?: unknown; y?: unknown }) => {
+      const x = Number(point?.x);
+      const y = Number(point?.y);
+      if (Number.isFinite(x) && Number.isFinite(y)) points.push({ x, y });
+    };
+
+    Object.values(layout ?? {}).forEach(addPoint);
+    Object.values(scenario.villages ?? {}).forEach(addPoint);
     const minX = Math.min(...points.map((point) => point.x));
     const maxX = Math.max(...points.map((point) => point.x));
     const minY = Math.min(...points.map((point) => point.y));
@@ -27,10 +33,22 @@ export function NetworkMap({ scenario, solution, layout, currentTime, showRoutes
     const project = (point: Point) => ({ x: offsetX + (point.x - minX) * scale, y: HEIGHT - (offsetY + (point.y - minY) * scale) });
     const nodePoint = (nodeId: string | number): Point => {
       const key = String(nodeId);
+    
       const explicit = layout?.[key];
-      if (explicit) return project({ x: Number(explicit.x), y: Number(explicit.y) });
+      if (explicit) {
+        const x = Number(explicit.x);
+        const y = Number(explicit.y);
+        if (Number.isFinite(x) && Number.isFinite(y)) return project({ x, y });
+      }
+    
       const village = scenario.villages?.[key];
-      return village ? project({ x: Number(village.x), y: Number(village.y) }) : project({ x: 0, y: 0 });
+      if (village) {
+        const x = Number(village.x);
+        const y = Number(village.y);
+        if (Number.isFinite(x) && Number.isFinite(y)) return project({ x, y });
+      }
+    
+      return project({ x: 0, y: 0 });
     };
     return { nodePoint };
   }, [layout, scenario]);
