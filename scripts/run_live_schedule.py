@@ -37,7 +37,7 @@ REQUIRED_SOLUTION_FIELDS = (
 
 
 def parse_arguments() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="实时运行翼援调度方案")
+    parser = argparse.ArgumentParser(description="实时运行驰援调度方案")
     parser.add_argument("--scenario-json", type=Path, default=None, help="与 scenario_*.json 兼容的场景文件")
     parser.add_argument("--date", choices=("2025-08-29", "2025-08-01"), help="兼容旧入口的示例场景日期")
     parser.add_argument("--group", choices=tuple(GROUP_MODES), help="示例场景组别；用户场景固定为 user")
