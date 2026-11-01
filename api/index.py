@@ -253,7 +253,7 @@ def _model_metadata() -> dict[str, Any]:
 def _get_action(action: str, params: dict[str, Any]) -> Any:
     index = load_solution_index()
     if action == "health":
-        return {"status": "ok", "service": "wingaid-api", "version": app.version}
+        return {"status": "ok", "service": "chiyuan-api", "version": app.version}
     if action == "meta":
         return _model_metadata()
     if action == "examples":
