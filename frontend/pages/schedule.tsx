@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { KpiCard } from '../components/KpiCard';
 import { NetworkMap } from '../components/NetworkMap';
 import { PageHeader } from '../components/PageHeader';
@@ -12,8 +12,28 @@ export default function SchedulePage() {
   const { scenario, solution, summary, layout, loading, runCurrentSchedule } = useApp();
   const [playing, setPlaying] = useState(false); const [time, setTime] = useState(0); const [speed, setSpeed] = useState(1); const [error, setError] = useState('');
   const maxTime = useMemo(() => { const values = Object.values(solution?.vehicle_trajectories ?? {}).flat().map((frame) => Number(frame.time)); return values.length ? Math.max(...values) : 0; }, [solution]);
+  const timeRef = useRef(0);
+  useEffect(() => { timeRef.current = time; }, [time]);
   useEffect(() => { setTime(0); setPlaying(false); }, [solution?.generated_at, solution?.scenario_hash]);
-  useEffect(() => { if (!playing || maxTime <= 0) return; const timer = window.setInterval(() => setTime((current) => { const next = current + maxTime * 0.012 * speed; if (next >= maxTime) { setPlaying(false); return maxTime; } return next; }), 60); return () => window.clearInterval(timer); }, [maxTime, playing, speed]);
+  useEffect(() => {
+    if (!playing || maxTime <= 0) return;
+    let animationFrame = 0;
+    let previous = performance.now();
+    const tick = (now: number) => {
+      const elapsed = Math.max((now - previous) / 1000, 0);
+      previous = now;
+      const next = Math.min(timeRef.current + elapsed * (maxTime / 5) * speed, maxTime);
+      timeRef.current = next;
+      setTime(next);
+      if (next >= maxTime) {
+        setPlaying(false);
+        return;
+      }
+      animationFrame = window.requestAnimationFrame(tick);
+    };
+    animationFrame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, [maxTime, playing, speed]);
   async function calculate() { setError(''); try { await runCurrentSchedule(); } catch (reason) { setError(reason instanceof Error ? reason.message : String(reason)); } }
   if (!scenario) return <EmptyPanel title="尚未选择场景" detail="请先在“场景与需求”中创建场景。" />;
   const metrics = summary?.metrics ?? solution?.metrics ?? {}; const satisfaction = Number(metrics.total_demand_satisfied_rate);
