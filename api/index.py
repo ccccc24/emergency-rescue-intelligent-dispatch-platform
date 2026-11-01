@@ -21,7 +21,7 @@ from typing import Any
 from fastapi import FastAPI, Query, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -321,6 +321,37 @@ def _post_action(action: str, payload: dict[str, Any]) -> Any:
             }
         )
     raise ValueError(f"未知 POST action：{action}")
+
+
+_ROOT_PAGE = """<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>翼援航空应急救援调度 API</title>
+<style>
+body{margin:0;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f6f7f9;color:#1f2933;display:flex;min-height:100vh;align-items:center;justify-content:center;padding:24px;box-sizing:border-box}
+main{max-width:560px;width:100%;background:#fff;border:1px solid #e4e7eb;border-radius:12px;padding:32px}
+h1{font-size:20px;margin:0 0 8px}p{line-height:1.7;margin:8px 0;color:#52606d}
+.ok{display:inline-block;background:#e3f9ee;color:#0f7a4a;border-radius:999px;padding:2px 10px;font-size:13px;margin-bottom:12px}
+ul{padding-left:20px;line-height:1.9}a{color:#c2410c}code{background:#f1f3f5;padding:1px 6px;border-radius:4px}
+</style></head><body><main>
+<span class="ok">后端运行正常</span>
+<h1>翼援航空应急救援调度 API</h1>
+<p>这是 FastAPI 后端服务，所有接口统一位于 <code>/api/index</code>，通过 <code>action</code> 参数区分操作。</p>
+<ul>
+<li><a href="/api/index?action=health">健康检查 action=health</a></li>
+<li><a href="/api/index?action=examples">示例场景 action=examples</a></li>
+<li><a href="/docs">接口文档 /docs</a></li>
+</ul>
+<p>可视化前端位于仓库的 <code>frontend/</code> 目录，需要单独部署为 Next.js 项目。设置环境变量 <code>FRONTEND_URL</code> 后，访问本页会自动跳转到前端。</p>
+</main></body></html>"""
+
+
+@app.get("/", include_in_schema=False)
+def root() -> Response:
+    frontend_url = os.getenv("FRONTEND_URL", "").strip()
+    if frontend_url:
+        return RedirectResponse(frontend_url, status_code=307)
+    return HTMLResponse(_ROOT_PAGE)
 
 
 @app.get("/api/index")
