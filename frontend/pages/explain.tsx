@@ -125,7 +125,7 @@ export default function ExplainPage() {
       <PageHeader
         kicker="OPTIONAL AI LAYER"
         title="AI 决策解释"
-        description="使用 DeepSeek 解释当前调度方案。未配置 Key 时只提供规则兜底回答，不会冒充 AI 结果。"
+        description="使用 DeepSeek 解释当前调度方案。需配置 Key 进行 AI 问答。"
         actions={(
           <span className={`badge ${hasLlmAccess ? 'badge-success' : 'badge-warning'}`}>
             {apiKey.trim() ? '个人 DeepSeek Key 已就绪' : meta?.llm_configured ? 'DeepSeek 服务端已配置' : '需要 DeepSeek Key'}
@@ -138,7 +138,7 @@ export default function ExplainPage() {
           <span className="eyebrow">DEEPSEEK CONNECTION</span>
           <h2>配置你的 DeepSeek API Key</h2>
           <p>
-            本平台使用 DeepSeek 模型 <code>{modelLabel}</code>。没有 Key 时只能使用规则兜底；
+            本平台使用 DeepSeek 模型 <code>{modelLabel}</code>。需先填写 Key；
             填写后可先执行连接测试，再让 AI 解释当前方案。
           </p>
           <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noreferrer">
