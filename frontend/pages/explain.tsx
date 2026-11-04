@@ -138,7 +138,7 @@ export default function ExplainPage() {
           <span className="eyebrow">DEEPSEEK CONNECTION</span>
           <h2>配置你的 DeepSeek API Key</h2>
           <p>
-            本平台使用 DeepSeek 模型 <code>{modelLabel}</code>。需先填写 Key；
+            本平台使用 DeepSeek 模型 <code>{modelLabel}</code>。需先填写 Key，
             填写后可先执行连接测试，再让 AI 解释当前方案。
           </p>
           <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noreferrer">
