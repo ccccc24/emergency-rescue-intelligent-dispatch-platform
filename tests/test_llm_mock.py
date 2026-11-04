@@ -157,4 +157,4 @@ def test_http_401_is_classified(monkeypatch, tmp_path) -> None:
     result = explain_question(SUGGESTED_QUESTIONS[1], _summary())
     assert result["status"] == "failed"
     assert result["error_type"] == "http_401"
-    assert result["user_message"] == "LLM 鉴权失败（HTTP 401），请检查 API Key。"
+    assert result["user_message"] == "DeepSeek API Key 无效或无权限（HTTP 401），请重新填写。"
