@@ -181,5 +181,24 @@ export interface ModelMeta {
   demand: { model_type: string; test_metrics: { MAE: number; RMSE: number; ['R²']: number }; trained_at: string };
   risk: { model_type: string; test_metrics: { accuracy: number; f1: number; auc: number }; trained_at: string };
   llm_configured: boolean;
+  llm_provider?: string;
+  llm_model?: string;
   suggested_questions: string[];
+}
+
+export interface LlmAnswer {
+  mode: 'ai' | 'mock';
+  status: string;
+  answer: string;
+  fallback_reason?: string | null;
+  user_message?: string | null;
+  error_type?: string | null;
+}
+
+export interface LlmTestResult {
+  ok: boolean;
+  provider: string;
+  model: string;
+  error_type?: string | null;
+  message: string;
 }
