@@ -44,7 +44,7 @@ from app.common.scenario_builder import (  # noqa: E402
     read_excel_scenario,
 )
 from scripts.run_live_schedule import GROUP_MODES  # noqa: E402
-from src.llm import SUGGESTED_QUESTIONS, explain_question, is_llm_configured  # noqa: E402
+from src.llm import SUGGESTED_QUESTIONS, explain_question, get_llm_config, is_llm_configured, test_llm_connection  # noqa: E402
 from src.ml.data_gen import load_config  # noqa: E402
 from src.ml.user_prediction import UserPredictionError, predict_user_inputs  # noqa: E402
 from src.optimization.export_solution import export_solution  # noqa: E402
@@ -242,10 +242,13 @@ def _comparison_payload(scenario_date: str) -> dict[str, Any]:
 def _model_metadata() -> dict[str, Any]:
     demand = json.loads((PROJECT_ROOT / "models" / "demand_model_meta.json").read_text(encoding="utf-8"))
     risk = json.loads((PROJECT_ROOT / "models" / "risk_model_meta.json").read_text(encoding="utf-8"))
+    llm_config = get_llm_config()
     return {
         "demand": demand,
         "risk": risk,
         "llm_configured": is_llm_configured(),
+        "llm_provider": "DeepSeek",
+        "llm_model": llm_config.model,
         "suggested_questions": list(SUGGESTED_QUESTIONS),
     }
 
@@ -273,7 +276,7 @@ def _get_action(action: str, params: dict[str, Any]) -> Any:
     raise ValueError(f"未知 GET action：{action}")
 
 
-def _post_action(action: str, payload: dict[str, Any]) -> Any:
+def _post_action(action: str, payload: dict[str, Any], request_api_key: str = "") -> Any:
     if action == "predict":
         return predict_user_inputs(
             payload.get("villages") or [],
@@ -302,7 +305,13 @@ def _post_action(action: str, payload: dict[str, Any]) -> Any:
             raise ValueError("scenario 和 solution 必须是对象")
         normalized = _normalize_scenario_maps(scenario)
         summary = build_plan_summary(normalized, solution, load_village_names(), str(payload.get("group") or "C"))
-        return explain_question(str(payload.get("question") or "请解释当前方案"), summary)
+        return explain_question(
+            str(payload.get("question") or "请解释当前方案"),
+            summary,
+            api_key=request_api_key or None,
+        )
+    if action == "test-llm":
+        return test_llm_connection(api_key=request_api_key or None)
     if action == "import-excel":
         encoded = str(payload.get("data_base64") or "")
         if not encoded:
@@ -374,7 +383,8 @@ async def api_post(request: Request, action: str = Query(...)) -> Any:
             raise ValueError("请求体必须是 JSON") from error
         if not isinstance(payload, dict):
             raise ValueError("请求体必须是 JSON 对象")
-        return _success(_post_action(action, payload))
+        request_api_key = (request.headers.get("x-deepseek-api-key") or "").strip()
+        return _success(_post_action(action, payload, request_api_key=request_api_key))
     except (ValueError, KeyError, FileNotFoundError, ScenarioValidationError, UserPredictionError) as error:
         return _failure(str(error), 400)
     except Exception as error:
