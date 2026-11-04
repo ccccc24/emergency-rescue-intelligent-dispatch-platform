@@ -1,18 +1,24 @@
-import type { ActiveScenario, ComparePayload, ExampleIndex, ExamplePayload, ModelMeta, PredictionResult, RoadInputRow, Scenario, SchedulerConfig, Solution, VillageInputRow } from './types';
+import type { ActiveScenario, ComparePayload, ExampleIndex, ExamplePayload, LlmAnswer, LlmTestResult, ModelMeta, PredictionResult, RoadInputRow, Scenario, SchedulerConfig, Solution, VillageInputRow } from './types';
 
 const configuredBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 const isLocalBrowser = typeof window !== 'undefined' && ['localhost', '127.0.0.1'].includes(window.location.hostname);
 const API_BASE = (configuredBase || (isLocalBrowser ? 'http://127.0.0.1:8000' : '')).replace(/\/$/, '');
 type ApiEnvelope<T> = { ok: true; data: T } | { ok: false; error: string };
 
-async function request<T>(action: string, options: { method?: 'GET' | 'POST'; params?: Record<string, string | number | undefined>; body?: unknown } = {}): Promise<T> {
+async function request<T>(action: string, options: { method?: 'GET' | 'POST'; params?: Record<string, string | number | undefined>; body?: unknown; headers?: Record<string, string> } = {}): Promise<T> {
   const search = new URLSearchParams({ action });
   Object.entries(options.params ?? {}).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== '') search.set(key, String(value));
   });
+  const headers = options.body === undefined && !options.headers
+    ? undefined
+    : {
+        ...(options.body === undefined ? {} : { 'Content-Type': 'application/json' }),
+        ...(options.headers ?? {}),
+      };
   const response = await fetch(`${API_BASE}/api/index?${search.toString()}`, {
     method: options.method ?? 'GET',
-    headers: options.body === undefined ? undefined : { 'Content-Type': 'application/json' },
+    headers,
     body: options.body === undefined ? undefined : JSON.stringify(options.body),
     cache: 'no-store',
   });
@@ -35,7 +41,8 @@ export const api = {
   build: (payload: { villages: VillageInputRow[]; roads: RoadInputRow[]; config: SchedulerConfig; weather: string; input_mode: string; predict_missing: boolean; overwrite_existing?: boolean; source?: string; label?: string }) => request<ActiveScenario>('build', { method: 'POST', body: payload }),
   predict: (payload: { villages: VillageInputRow[]; roads: RoadInputRow[]; weather: string; source?: string; overwrite_existing?: boolean }) => request<PredictionResult>('predict', { method: 'POST', body: payload }),
   schedule: (payload: { scenario: Scenario; config: SchedulerConfig; mode: string; group?: string; date?: string }) => request<Solution>('schedule', { method: 'POST', body: payload }),
-  explain: (payload: { scenario: Scenario; solution: Solution; group: string; question: string }) => request<{ mode: 'ai' | 'mock'; status: string; answer: string; fallback_reason?: string | null; user_message?: string | null }>('explain', { method: 'POST', body: payload }),
+  explain: (payload: { scenario: Scenario; solution: Solution; group: string; question: string }, apiKey?: string) => request<LlmAnswer>('explain', { method: 'POST', body: payload, headers: apiKey ? { 'X-DeepSeek-API-Key': apiKey } : undefined }),
+  testLlm: (apiKey: string) => request<LlmTestResult>('test-llm', { method: 'POST', body: {}, headers: { 'X-DeepSeek-API-Key': apiKey } }),
   importExcel: (payload: { data_base64: string; filename?: string; predict_missing?: boolean; config?: SchedulerConfig; weather?: string }) => request<ActiveScenario>('import-excel', { method: 'POST', body: payload }),
 };
 
