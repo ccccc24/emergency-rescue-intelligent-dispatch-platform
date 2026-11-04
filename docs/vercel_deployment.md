@@ -46,9 +46,9 @@ NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
 可选环境变量：
 
 ```text
-LLM_API_KEY=...
-LLM_BASE_URL=https://api.deepseek.com/v1
-LLM_MODEL=deepseek-v4-flash
+DEEPSEEK_API_KEY=...
+LLM_BASE_URL=https://api.deepseek.com/chat/completions
+LLM_MODEL=deepseek-flash
 CORS_ORIGINS=https://<前端项目>.vercel.app
 ```
 
@@ -89,4 +89,17 @@ app = FastAPI()
 
 可以让 Vercel 明确识别 FastAPI ASGI 入口。
 
+## 用户在页面配置 DeepSeek API Key
 
+即使服务端没有配置 `DEEPSEEK_API_KEY`，用户也可以在前端“AI 决策解释”页面填写自己的 Key：
+
+1. 前往 DeepSeek 开放平台创建 API Key：<https://platform.deepseek.com/api_keys>
+2. 在页面中粘贴 Key，点击“保存并测试”。
+3. 测试通过后提交解释问题。
+
+安全约束：
+
+- Key 仅保存在当前浏览器标签页的 `sessionStorage`，关闭标签页后自动清除。
+- 请求通过 `X-DeepSeek-API-Key` 请求头发送给本项目后端，再由后端转发给 DeepSeek。
+- 后端不会持久化或主动写入日志；请勿把 Key 写入仓库或 `.env.example`。
+- 用户自己的 Key 固定使用 DeepSeek 官方端点和 `deepseek-flash` 模型。
